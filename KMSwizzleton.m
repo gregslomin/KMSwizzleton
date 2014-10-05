@@ -22,7 +22,7 @@ static Class _realClass = nil;
     NSAssert([singletonClass respondsToSelector:@selector(sharedInstance)], nil);
     
     _realClass = singletonClass;
-    _realInstance = objc_msgSend(_realClass, @selector(sharedInstance));
+    _realInstance = ((id (*)(id, SEL))objc_msgSend)(_realClass, @selector(sharedInstance));
     _fakeInstance = fakeInstance;
     
     [self swizzleClassMethod:@selector(sharedInstance)
